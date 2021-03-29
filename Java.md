@@ -118,6 +118,591 @@ class Tester {
 
 - E.g. - We can have a class named Customer to represent the state and behavior of all customers. Each individual customer can then be represented using an object of the Customer class.
 
+# Access Modifier:
+- So far, you have been using "public" and "private" keywords in your code. These keywords are called access modifiers.
+
+- You will now understand them in more details.
+
+- They are used to specify access levels to control the visibility of a class and its members. This facilitates encapsulation. There are 4 such access modifiers in Java:
+
+1. Public: Accessible from any other class
+
+2. Private: Accessible only inside its own class
+
+3. Protected: Accessible inside the same package and to the sub-classes in different packages. This will be discussed in detail later in the course.
+
+4. Default: Accessible inside the same package. Members created without any access modifier will have this access.
+
+
+# Array
+
+- An array is a collection of values of the same data type, stored in contiguous memory locations and referred by the same name. It holds a fixed number of values, decided at the time of array declaration.
+
+- In order to use array in Java, you need to declare an array along with a datatype. You can declare, create and initialize an array in the following ways:
+
+- Declaring and initializing the array in one line:
+- Syntax:
+```
+dataType[ ] arrayVarName = {elementsOfArraySeparatedByComma};
+```
+- Eg:
+```
+long[ ] restaurantContacts = { 9992346725L, 9992346726L, 9992346727L };
+```
+- Creating the array using new: 
+- Syntax:
+```
+dataType[ ] arrayVarName = new dataType[size];
+arrayVarName[index] = element;
+```
+- E.g.:
+```
+long[ ] restaurantContacts = new long [3]; // Creating an array of size 3 of long datatype
+restaurantContacts [0] = 9992346725L;
+restaurantContacts [1] = 9992346726L;
+restaurantContacts [2] = 9992346727L;
+```
+- Declaring and creating the array in different lines: 
+- Syntax:
+```
+dataType [] arrayVarName;
+arrayVarName = new dataType[size];
+arrayVarName[index] = element;
+```
+- E.g.:
+```
+long[] restaurantContacts;
+restaurantContacts = new long[3];
+restaurantContacts[0] = 9992346725L;
+restaurantContacts[1] = 9992346726L;
+restaurantContacts[2] = 9992346727L;
+```
+
+### Accessing the elements of an array
+
+- Each value stored in an array is called as an element. Each element in an array is accessed, stored and retrieved using its position in the array, called index. Indexes in Java are zero-based, i.e., the valid range of indexes for the elements of an array is from 0 to (size of Array-1).
+
+```
+long[] restaurantContacts = new long[3];
+restaurantContacts [0] = 9992346725L; // Elements can be updated and accessed with the help of index
+restaurantContacts [1] = 9992346726L;
+restaurantContacts [2] = 9992346727L;
+System.out.println(restaurantContacts [1]) ;// Accessing and displaying the element at the 1st index  
+
+```
+
+### Using for loop
+
+Instead of writing n number of lines to access n elements of an array, you can use different looping constructs like for loop, for-each loop, etc.
+
+The below code shows how to access and display the elements of restaurantContacts with the help of for loop.
+```
+public class Tester {
+	public static void main(String[] args) {
+		long[] restaurantContacts = { 9992346725L, 9992346726L, 9992346727L };
+		for (int index = 0; index < restaurantContacts.length; index++) {
+			// Accessing element at position index
+			System.out.println(restaurantContacts[index]);
+		}
+	}
+}
+```
+Note: - The length attribute of an array is used to get its size
+
+Java also has another loop known as for-each loop to iterate over collections. This eliminates the use of indexes. It displays the array elements one by one. It holds an array element in a variable and then executes the body of the loop.
+
+Syntax:
+```
+for (dataType variable: array) { 
+	//body of the loop 
+} 
+```
+The below code displays the elements of restaurantContacts array using the for-each loop.
+```
+public class Tester {
+	public static void main(String[] args) {
+		long[] restaurantContacts = { 9992346725L, 9992346726L, 9992346727L };
+		for (long contactNumber : restaurantContacts) {
+			System.out.println(contactNumber);
+		}
+	}
+}
+```
+
+# Multi dimensional Array
+
+Next, you will learn about Multi-dimensional arrays.
+
+Multi-dimensional arrays are arrays of arrays with each element of the array holding the reference of other arrays. A multi-dimensional array is created by appending one set of square brackets ([]) per dimension.
+
+Let's see a simple example to declare, instantiate, initialize and display a 2-dimensional (2D) array.
+
+Syntax for creating 2D array:
+```
+dataType[][] arrayVarName = new dataType[rowsize][columnsize];
+```
+Note: The second dimension, i.e., the column size is optional.
+
+E.g.
+```
+//Here, the row size is 7, and the column size is 2
+//The 0th index stores the Max temperature and 1st index stores the Min temperature
+int[][] dayWiseTemperature = new int[7][2];    
+dayWiseTemperature[0][0]=29; // Initialization 
+dayWiseTemperature[0][1]=21;
+//and so on
+//Another way of creating and initializing 2D array 
+int[][] dayWiseTemperature = new int[][]  {{29,21},
+		{24,23},
+		{26,22},
+		{28,23},
+		{29,24},
+		{23,20},
+		{29,21}};
+```
+
+The below code shows how to update and display an element of a 2D array
+```
+//Updating an element of a 2D array 
+dayWiseTemperature[2][0]=33;
+//Displaying value of an element of a 2D array 
+System.out.println(dayWiseTemperature[2][0]); 
+```
+
+# Points
+
+Some of the important points that you should be knowing about arrays are:
+
+- An array is a collection of similar data in contiguous memory locations referred by the same name
+
+- Can be used to store data of primitive as well as reference types
+
+- Holds a fixed number of values, determined at the time of array declaration
+
+- Array index always starts from zero
+
+- The length attribute of an array can be used to get its size
+
+- Once initialized, the size of an array cannot be changed
+
+### Command Line argumnet
+
+Now that you know arrays, you will be able to notice something familiar in the code that you have already seen.
+```
+public static void main( String[] args) {
+		// Code 
+	}
+```
+String args[] is an array of strings. 
+
+How are values passed to this array?
+
+Values are passed to this array using command-line arguments. Such arguments are passed as inputs to your program either through the command prompt of your system or through the run configuration of your IDE.
+
+Create a class named Greetings as shown below.
+```
+public class Greetings{
+     public static void main(String[] args){
+          System.out.println("Hello"+args[0]);
+     }
+}
+```
+The main method accepts inputs through the String[] args and displays the output using it.
+
+# String
+
+- String is used to store a sequence of characters. String is a predefined class in Java and comes with many methods which can help us perform various operations on it. 
+
+- There are two ways to create a string: 
+
+1. String literal 
+```
+        String customerName = "Jasmine"; 
+```
+2. Using new() keyword 
+```
+        String customerName = new String("Jasmine"); 
+```
+
+- Every time you create a string literal, the JVM checks the String constant pool. String constant pool in Java is a pool of Strings stored in Heap memory. If the string exists in the pool, then a reference to the existing literal is returned. If the string is not found, then a new instance is created and placed in the pool. 
+
+- In the below diagram, since the value of newName is also Max, new memory is not allocated for newName and newName points to the same memory location as name does.
+
+- String name = "MAX"
+- String newName = "MAX"
+- In name==newName will be true.
+
+- Strings behave a bit differently when a new instance of String class is created. When you create a string using the new() keyword, JVM places the literal in the constant pool and also creates a new string object in heap memory. The reference variable points to the object in the heap memory.
+
+- In the below example, either 1 or 2 strings will be created. If there is already a string literal "Welcome" in the pool, then only one string will be created. If there is no string literal "Welcome" in the pool, then it will be first created in the pool and then in the heap memory resulting in creation of 2 String objects. 
+
+- String str = new String("Welcome")
+- String newStr = new String("Welcome")
+- str == newStr will be false.
+
+## Debugging
+
+pending
+
+# Static
+- When a variable is declared as Static, then a single copy of the variable is created and shared among all objects at the class level. Memory allocation for such variables happen only once when the class is loaded in the memory. These variables are also known as class-level variables.
+
+- Since static variables and instance variables are both members of the class, they are often referred to as member variables.
+
+- To create a static member variable, precede its declaration with the keyword static. When a member is declared static, it can be accessed before any object of the class is created and without reference to any object. 
+
+- Syntax:
+```
+private static float deliveryCharge; //Declaration of static variable 
+```
+
+- Since the static variable gets created only once, now only one deliveryCharge member variable will be created and all the objects of that class will share that member variable. This can be visualized as
+
+- How can we initialize the static variables?
+
+- One way to initialize the static variable is to initialize at the time of declaration as shown below
+```
+private static float deliveryCharge = 1.5f; 
+```
+- This is fine if you have to directly initialize a value but this would not work if you need to perform some computation and then initialize the value of a static member variable. 
+
+- In that case, Java provides one more type of static member called static block.
+
+## Static Block
+
+- Static blocks are used to initialize static variables when it cannot be done in a single line. They can also be used to add preprocessing if required.
+
+- In the scenario of the delivery charge, the static variable deliveryCharge can be initialized with the help of static block as shown below
+```
+static {
+    deliveryCharge = 1.5f; // initialize the static variable
+    }
+```
+
+- Static blocks get executed only once when a class gets loaded in memory. If there are multiple static blocks, they will be executed in the order of their occurrence.
+
+- After implementing static variable and static block, the Customer class looks as shown below.
+
+```
+class Customer {
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private String address;
+	private static float deliveryCharge;
+	static {
+		deliveryCharge = 1.5f;
+	}
+	public Customer(String customerId, String customerName, long contactNumber,
+			String address) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+	}
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public long getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public void displayCustomerDetails() {
+		System.out.println("Displaying customer details \n***********");
+		System.out.println("Customer Id : " + customerId);
+		System.out.println("Customer Name : " + customerName);
+		System.out.println("Contact Number : " + contactNumber);
+		System.out.println("Address : " + address);
+		System.out.println();
+	}
+	public double payBill(double totalPrice) {
+		double discountPercentage = 5;
+		System.out.println("Calculating final amount to be paid.....");
+		double priceAfterDiscount = totalPrice * (1 - (discountPercentage / 100));
+        double finalBillAmount=priceAfterDiscount + deliveryCharge;
+		return finalBillAmount;
+	}
+}
+
+```
+
+## Static Method
+
+- How can you access the static variable deliveryCharge in order to display the total bill amount which has to be paid by the customers?
+
+- One way of accessing the static variable is with the help of instances of the class as shown below.
+
+```
+// Accessing the static variable with the help of instance of the class
+System.out.println("Delivery Charge for customer1 is "+ customer1.deliveryCharge);
+```
+- Since the static variables are not specific to an object, accessing a static variable using an object is not the correct way.
+
+- Instead, static variables should be accessed with the help of class name instead of the instance of the class as shown below:
+
+```
+// Accessing the static variable with the help of class
+System.out.println("Delivery Charge for customer1 is "+ Customer.deliveryCharge);
+```
+
+- To update or retrieve the value of a static variable, you need to use the setter and getter methods.
+
+- Since static variable is not specific to an object, you need a way to access the setter and getter methods without an object. This is possible by creating static methods.
+
+- Static methods are methods prefixed with the static keyword. These methods can be accessed without an object of the class. Similar to static variables, they are accessed using the class name. A static method can be invoked without creating an instance of a class.
+
+- A static method can only access static variables and cannot access instance variables.
+
+- In case of the delivery charge scenario, you can create static setter and getter methods for deliveryCharge as shown below
+```
+public static float getDeliveryCharge() {
+	return deliveryCharge;
+}
+public static void setDeliveryCharge(float deliveryCharge) {
+	Customer.deliveryCharge = deliveryCharge;
+}
+```
+
+- What happens if you try to access the deliveryCharge in setDeliveryCharge() method with the help of this?
+```
+public static void setDeliveryCharge(float deliveryCharge) {
+	// Which object's deliveryCharge?
+	this.deliveryCharge = deliveryCharge; // This line will throw error 
+	}
+```
+- Static blocks and static methods cannot access non-static (instance) members directly since static methods do not belong to any object, so it is not possible to know which object's instance variables should be accessed. Trying to do so will result in a compilation error.
+
+- However, non-static methods can access static members.
+
+- The following code shows the implementation of Customer class with static variables, static blocks and static methods.
+
+```
+class Customer {
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private String address;
+	private static float deliveryCharge;
+	static {
+		deliveryCharge = 1.5f;
+	}
+	public Customer(String customerId, String customerName, long contactNumber, String address) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+	}
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public long getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public static float getDeliveryCharge() {
+		return deliveryCharge;
+	}
+	public static void setDeliveryCharge(float deliveryCharge) {
+		Customer.deliveryCharge = deliveryCharge;
+	}
+	public void displayCustomerDetails() {
+		System.out.println("Displaying customer details");
+		System.out.println("Customer Id: " + this.customerId);
+		System.out.println("Customer Name: " + this.customerName);
+		System.out.println("Contact Number: " + this.contactNumber);
+		System.out.println("Address: " + this.address);
+		System.out.println("Delivery Charge: " + Customer.deliveryCharge);
+		System.out.println();
+	}
+	public double payBill(double totalPrice) {
+		double discountPercentage = 5;
+		System.out.println("Calculating final amount to be paid.....");
+		double priceAfterDiscount = totalPrice * (1 - (discountPercentage / 100));
+		double finalBillAmount = priceAfterDiscount + Customer.deliveryCharge;
+		return finalBillAmount;
+	}
+}
+public class Tester {
+	public static void main(String[] args) {
+		Customer customer1 = new Customer("C1001", "Sam", 9945000009L, "Carolina Street, Springfield, 62702");
+		Customer.setDeliveryCharge(2f);
+		System.out.println("Final amount to be paid: $" + customer1.payBill(20));
+		Customer customer2 = new Customer("C1002", "John", 9645000009L, "Carolina Street, Springfield, 62708");
+		System.out.println("Final amount to be paid: $" + customer2.payBill(15));
+		System.out.println("Delivery Charge for the customers are: " + Customer.getDeliveryCharge());
+	}
+}
+
+```
+
+- Another most common implementation of the static concept is in auto-generation of Ids.
+
+Let us assume that we want to generate the customer Ids for all the customers. All the customer Ids must be unique and it should start with 'C101'. In order to implement this requirement and generate the customerId for all the customers, the concept of static is used as shown below.
+
+```
+class Customer {
+	private static int counter; // Declaring the static variable counter
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private String address;
+	private static float deliveryCharge;
+	static {
+		deliveryCharge = 1.5f;
+		counter = 100; // Initializing the static variable counter
+	}
+	public Customer(String customerName, long contactNumber, String address) {
+		// Incrementing the counter and initializing customerId
+		this.customerId = "C" + ++Customer.counter;
+		this.customerName = customerName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+	}
+	// Static method to get the value of static variable counter
+	public static int getCounter() {
+		return counter;
+	}
+	// Static method to change the value of static variable counter if needed
+	public static void setCounter(int counter) {
+		Customer.counter = counter;
+	}
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public long getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public static float getDeliveryCharge() {
+		return deliveryCharge;
+	}
+	public static void setDeliveryCharge(float deliveryCharge) {
+		Customer.deliveryCharge = deliveryCharge;
+	}
+	public void displayCustomerDetails() {
+		System.out.println("Displaying customer details");
+		System.out.println("Customer Id: " + this.customerId);
+		System.out.println("Customer Name: " + this.customerName);
+		System.out.println("Contact Number: " + this.contactNumber);
+		System.out.println("Address: " + this.address);
+		System.out.println("Delivery Charge: " + Customer.deliveryCharge);
+		System.out.println();
+	}
+	public double payBill(double totalPrice) {
+		double discountPercentage = 5;
+		System.out.println("Calculating final amount to be paid.....");
+		double priceAfterDiscount = totalPrice * (1 - (discountPercentage / 100));
+		double finalBillAmount = priceAfterDiscount + Customer.deliveryCharge;
+		return finalBillAmount;
+	}
+}
+public class Tester {
+	public static void main(String[] args) {
+		Customer customer1 = new Customer("Sam", 9945000009L, "Carolina Street, Springfield, 62702");
+		Customer customer2 = new Customer("John", 9645000009L, "Carolina Street, Springfield, 62708");
+		Customer customer3 = new Customer("Alex", 9745000009L, "Carolina Street, Springfield, 62768");
+		System.out.println("Customer Id for the first customer is: " + customer1.getCustomerId());
+		System.out.println("Customer Id for the second customer is: " + customer2.getCustomerId());
+		System.out.println("Customer Id for the third customer is: " + customer3.getCustomerId());
+	}
+}
+
+```
+
+## Static Tryout:
+```
+class Tester {
+	public static void main(String[] args) {
+		Car c1 = new Car("Red");
+		Car c2 = new Car("Green");
+		Car c3 = new Car("Blue");
+		System.out.println("Number of cars created: " + Car.getNumberOfCars());
+	}
+
+	static {
+		System.out.println("Tester class loaded");
+	}
+}
+
+class Car {
+	private String color;
+	private static int numberOfCars = 0;
+
+	static {
+		System.out.println("Car class loaded");
+	}
+
+	public Car(String color) {
+		this.color = color;
+		Car.numberOfCars += 1;
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	public static int getNumberOfCars() {
+		return numberOfCars;
+	}
+}
+
+```
+
+# Association
+
+- Association, also known as uses-a relationship exists between two classes when one object makes use of another object for its functionality. Here, both the objects can exist independently.
+
 
 # Encapsulation
 

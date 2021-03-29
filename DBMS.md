@@ -24,10 +24,12 @@ Data is stored in flat files and can be accessed using any programming languauge
 2. Complex process of retriving data
 3. Loss of data on multiple access or updating 
 4. Scurity is not possible
-5. Data redundancy
+5. Data redundancy and inconsistency
+6. Data isolation is not present
 
 ## Database System
 
+```
           Users
             |
 Application1 Application2
@@ -35,7 +37,7 @@ Application1 Application2
           DBMS (Database)
             |
             OS
-
+```
 ### Database : 
 Shared collection of logically related data and description of these data, designed to meet the information needs of an org.
 
@@ -43,6 +45,9 @@ Shared collection of logically related data and description of these data, desig
 Its is softwatre system that enables users to define, create, maintain and control acess of db.
 High Cost
 High end hardware configuration
+DBMS IS COLLECTION OR PROGRAM TO ACCESS DATA
+DBMS IS AN INTERFACE BETWEEN DATABASE APPLICATION AND DB
+data can be accessed by multiple program
 
 ### application program :
 An application program interatcs with a database by issuing an appropriate request. Interface between db and user
@@ -53,7 +58,7 @@ An application program interatcs with a database by issuing an appropriate reque
 3. Integirty - accuracy of data
 4. Transaction - modifications to db must either be successfull or not done at all
 5. Security - acess to authorize users only
-6. Recovery - Recoery mechanism for da
+6. Recovery - Recoery mechanism for data
 
 # Types of DB sys
 
@@ -70,7 +75,9 @@ Relational Model
 - no of attributed/column/files - Degree of therelation
 - no of rows- Cardinality of of the relation
 - null represent - currenty undefined
-- Domain - set of allwable value for one or more attributed - predefined value (Female, male)
+- Domain - set of allwable value for one or more attributed - predefined value (Female, male) - set of permitted value.
+- A relationship among set of values in a table is represented by a Row.
+- The attribute value that is currentlt unknow is NULL.
 
 ## Data integirty and constrainsts
 
@@ -94,6 +101,7 @@ EMP(Id, Name, sal, dept)
 - EMP & PURCHASE(EMPID)
 - related with 2 or more table
 - between tables
+- Customer information must be known before anything is sold to him/her
 
 ## Candidate key
 Its is minimal set of columns/attributes that can be used to uniquely identify a singles row/tuple in a relation.
@@ -103,6 +111,8 @@ A reltion can have multiple key
 Candidate key itself but only 1 Primary key pr relation
 efficient and minimal CK
 PK is the CK that is selected to uniqely identify a tuple in a relation.
+There cannot be more than 1 pk for a table
+Uniquly identifies a row.
 
 Table {A, B, C}
 
@@ -195,8 +205,8 @@ FK: ACCNO, CUSTID
 Structured Query Language (SQL) is used to manage data in all relational databases like DB2, Oracle, SQL Server etc. SQL standards are maintained by ISO.
 
 SQL:
-DDL
-DML
+DDL - Data Definition Languaage
+DML - Data Manipulation language
 DCL
 TCL
 
@@ -226,7 +236,7 @@ TCL
 - Update - Modify
 
 ## TCL
-- Commit - Save db changes and end trascation
+- Commit - Save db changes permanently and end trascation
 - Rollback - undo chnages
 
 Insert 5 emp details
@@ -236,6 +246,17 @@ Insert 5 emp details
 Rollback
 
 Autocommit -> On, all operation save by default
+
+# ALTER Command     |  	UPDATE Command
+
+SR.NO	ALTER Command	UPDATE Command
+1.	ALTER command is Data Definition Language (DDL).	| UPDATE Command is a Data Manipulation Language (DML).
+2.	Alter command will perform the action on structure level and not on the data level. | 	Update command will perform on the data level.
+3.	ALTER Command is used to add, delete, modify the attributes of the relations (tables) in the database.  |	UPDATE Command is used to update existing records in a database. 
+4.	ALTER Command by default initializes values of all the tuple as NULL. |	UPDATE Command sets specified values in the command to the tuples.
+5.	This command make changes with table structure. | This command makes changes with data inside the table.
+6.	Example : Table structure, Table Name, SP, functions etc. |	Example : Change data in the table in rows or in column etc.
+
 
 ## SQL DATATYPE
 - Character DT
@@ -382,7 +403,7 @@ CREATE TABLE Student (
 
 4. NOT NULL 
 - col cant have NULL values
-- applied to column level constraint
+- applied to column level constraint only
 - EXAMPLE - 
 ```
 CREATE TABLE STUDENT (FNAME VARCHAR(10) NOT NULL);
@@ -431,6 +452,10 @@ CREATE TABLE Student (
      Gender CHAR(1) CONSTRAINT Student_Gender_Ck CHECK (Gender IN('M', 'F')),
      PersonId INTEGER REFERENCES Person(PersonId));
 ```
+
+## Not Null  only define at Column level
+
+
 
 ## Exercise 1:
 https://lex.infosysapps.com/en/viewer/rdbms-hands-on/lex_auth_0127291332680990721?collectionId=lex_auth_0128302979653386245633&collectionType=Course
@@ -679,6 +704,7 @@ SELECT EName, 30 AS Value FROM Employee
 ```
 
 ## WHERE :
+- can be used on all column
 
 Comparison Opertaor
 ```
@@ -698,6 +724,8 @@ SELECT ID, ENAME FROM Employee WHERE SALARY > 75000 OR DEPT = 'ICP'
 ```
 
 BETWEEN : Values range
+salaray between 1000 and 2000 => salary is >=1000 abd salary <=2000
+
 ```
 Select id, ename, doj, dept, salary, bonus from employee where salary between 25000 and 75000;
 ```
@@ -708,6 +736,7 @@ Select id, ename, doj, dept, salary, bonus from employee where salary not in(250
 ```
 
 IN: Check for multiple values of an attribute, equivalent to or opertor
+c1 in (1,2) is similar to c1=1 or c1=2
 ```
 SELECT ID, ENAME FROM Employee WHERE ID IN (2,3),
 
@@ -757,9 +786,11 @@ SELECT * FROM EMPLOYEE;
 
 
 ## DISTINT
-- Remove duplicates
+- Remove duplicates based on all the col in select clause
 - Disticnt must be used immediately after SELECT
-- it consider null value 
+- it consider null value
+- used only wth select 
+- usage of distinct should be avoided as far as possible due to perfeormance issues.
 
 Single duplicate
 ```
@@ -796,6 +827,7 @@ select id,ename,doj,salary,bonus,dept from employee where doj like '%JAN%';
 ```
 
 ORDER BY:
+
 
 SELECT * FROM EMPLOYEE ORDER BY SALARY;
 
@@ -1190,7 +1222,13 @@ SELECT ITEMCODE, SNAME, SUM(QTYORDERED) TOTALQUANTITY FROM QUOTATION Q INNER JOI
 
 SELECT E2.EMPNAME, E2.DESIGNATION, E2.EMAILID FROM EMPDETAILS E1 INNER JOIN EMPDETAILS E2 ON E1.WORKSIN=E2.WORKSIN AND E1.EMPNAME='George' where E1.EMPID<>E2.EMPID;
 
+# Ass 20
 
+select C.Custid, C.Custname from Customer C Inner Join Customer cc On c.Address=CC.Address and C.Custid<>CC.Custid;
+
+# ASS 21
+
+Select I.ITEMCODE, DESCR, SNAME from ITEM I INNER JOIN Quotation Q ON I.ITEMCODE=Q.ITEMCODE;
 
 <!-- SELECT E.ID ID,E.ENAME,M.ID MGRID,M.ENAME MGRNAME,EC.MODEL E_MODEL,MC.MODEL M_MODEL
 FROM EMPLOYEE E INNER JOIN EMPLOYEE M ON E.MANAGER=M.ID
@@ -1203,3 +1241,50 @@ SELECT E.ID ID,E.ENAME,M.ID MGRID,M.ENAME MGRNAME,EC.MODEL E_MODEL,MC.MODEL M_MO
 FROM EMPLOYEE E INNER JOIN EMPLOYEE M ON E.MANAGER=M.ID
 INNER JOIN COMPUTER EC ON E.COMPID=EC.COMPID
 INNER JOIN COMPUTER MC ON M.COMPID=MC.COMPID   -- exer 18 -->
+
+QUIZ = > 7
+SELCT * FROM A FULL OUTER JOIN B ON A.P=B.X WHERE A.P IS NULL OR B.X IS NULL
+
+Q8
+
+Op 2
+op 3
+op 5 is correct
+
+Op 1
+A               B
+X               X   Y
+1               2   A
+
+cp:  1 2 A
+Fo:  1 Null
+   null 2 A
+
+Op 3
+A               B
+X               X   Y
+1               1   A
+                1   B
+
+cp:  1 1 A
+     1 1 B
+
+
+Fo:  1 1 A
+     1 1 B
+
+A               B
+X               X   Y
+1               2   A
+                3   B
+
+When nothing match then output will be different
+Cp : 1
+
+Q14
+A               B
+P               Q
+x               x
+Null            x
+x               Null
+

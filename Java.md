@@ -1012,6 +1012,1332 @@ public class Guest extends Customer {
 
 - Inheritance results in better organization of codes into smaller and simpler compilation units which makes the code more readable and easy to debug
 
+# Method Ovverloading
+
+# Polymosrphism
+
+Polymorphism is the ability of an object to take different forms, i.e., a single action that can be performed in different ways. So, polymorphism means many forms.
+
+Consider a simple example of a Bank. All the banks are providing loans to its customers.
+
+But are they all providing it at the same rate?
+
+No, rate of interest may differ from bank to bank. So, object of the Bank class may behave differently when we try to get the interest rate for bank loans (through a method).
+
+The Bank class, here, shows polymorphism.
+
+Polymorphishm is of two types:
+
+1. Static polymorphism
+
+2. Dynamic polymorphism
+
+Polymorphism that gets resolved during compile time is known as static polymorphism or compile time polymorphism. This polymorphism is achieved using overloading of the methods in the same class, called as Method overloading.
+
+Method overloading allows the programmer to have multiple methods with the same name in the same class, but differing in their signature.
+
+Signature can differ by
+
+1. the number of parameters
+
+2. the data type of parameters
+
+3. the order of the parameters
+
+Note: We cannot overload methods by their return type, i.e., two or more methods are not overloaded if they differ only in their return type.
+
+## Static
+
+Let us assume that later, the app provides another feature for the customers to change their address so that they can provide another delivery location.
+
+Now, we will add another method, updateAddress(Address address) as given below:
+```
+public class Customer {
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private Address address;
+	public void updateContact(long mobile) {
+		System.out.println("Updating customer contact number...");
+		this.setContactNumber(mobile);
+	}
+	public void updateAddress(Address address) {
+		System.out.println("Updating customer address...");
+		this.setAddress(address);
+	}
+	// Constructors and other methods
+}
+```
+So, here different methods are getting added to the code which are basically doing the same thing of updating the customer details which can be either contact number or address or any other details.
+
+Thus, is there any need of having these methods with a different name?
+
+No, since we have the option of creating overloaded methods, i.e., methods with same name differing in signature, we can use overloaded methods in this scenario.
+
+Here, the advantage is that we don’t have to create and remember different names for methods doing same functionality. For example, if overloading was not supported, we would have to create different method names like updateContact, updateAddress, updateContactAddress etc.
+
+#### Modified code of static 
+
+Considering this, our code will be modified as shown below:
+
+public class Customer {
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private Address address;
+	public void updateDetails(long mobile) {
+		System.out.println("Updating customer contact number...");
+		this.setContactNumber(mobile);
+	}
+	public void updateDetails(Address address) {
+		System.out.println("Updating customer address...");
+		this.setAddress(address);
+	}
+	// Constructors and other methods
+}
+Here, the Customer class is having two methods (having same behavior of updating the customer details) with same name: updateDetails() but both the methods differ in the data type of the parameter. This is Method Overloading and both the updateDetails methods are said to be overloaded methods.
+
+Overloaded methods are invoked just the usual way, where the method which matches the signature is invoked.
+
+public class Tester {
+	public static void main(String[] args) {
+		Customer customer = new Customer("C1016", "Stephen Abram", 7856341287L, custAddress);		
+			
+		Long newContact = 7890098656L;
+		Address newAddress = new Address("D119", "St. Louis Street", "Springfield", 62729);
+		
+		customer.updateDetails(newContact); //calls the updateDetails(long mobile) - based on the parameter
+        customer.updateDetails(newAddress); //calls the updateDetails(Address address) - based on the parameter	
+}
+
+Calls to the overloaded methods can be resolved based on the method signature during compilation and thus the name compile-time or static polymorphism.
+
+
+# Constructore overlaoding
+
+Just like normal methods, constructors can also be overloaded, i.e., a class can have multiple constructors. This is called constructor overloading. Remember that you have already seen a class having multiple constructors.
+
+The below code demonstrates constructor overloading.
+```
+class Customer {
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private Address address;
+	// Parameterless constructor
+	public Customer() {
+		System.out.println("Inside parameterless constructor");
+	}
+	// Parameterized constructor
+	public Customer(String customerId, String customerName, long contactNumber,
+			Address address) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+	}
+	// Parameterized constructor
+	public Customer(String customerName, long contactNumber, Address address) {
+		this.customerName = customerName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+	}
+	// Methods including getter and setter and other methods
+}
+public class Tester {
+	public static void main(String[] args) throws Exception {
+		/*
+		 Parameterless constructor will be invoked, instance variables should
+		 be initialized using setter methods
+		 */
+		Customer customerOne = new Customer();
+		/*
+		 Parameterized constructor with four parameters instance variables are
+		 initialized in the constructor
+		 */
+		Customer customerTwo = new Customer("C1016", "Stephen Abram",
+				7856341287L, new Address("D089", "St. Louis Street",
+						"Springfield", 62729));
+		/*
+		 Parameterized constructor with three parameters instance variables
+		 are initialized in the constructor
+		 */
+		Customer customerThree = new Customer("James Jonathan", 7828171287L,
+				new Address("D159", "St. Louis Street", "Springfield", 62729));
+	}
+}
+```
+
+# Method Ovverriding
+
+Similar to static polymorphism or compile time polymorphism, polymorphism can also be achieved at runtime. Such type of polymorphism is known as dynamic polymorphism. This type of polymorphism is achieved using overriding the parent method in the child class, called as Method Overriding.
+
+Overriding feature allows the programmer to have a different implementation of parent methods with the same signature in the child classes. Such parent methods are said to be overridden.
+
+When we override a method in the child class, it should have the same signature as that of the parent class.
+
+The method should not have a weaker access modifier.
+
+Private methods are not overridden.
+
+## Need of MOR
+
+Consider the parent Customer class. 
+
+All the customers’ need to pay the bill amount calculated for their orders. There is a payBill() in the Customer class for calculating the final amount for bill payment.
+
+You need to also remember that calculation of bill amount differs for each type of customer. Guests needs to pay a delivery charge of $2. Regular customers get a discount of 5%. Premium customers get a discount of 8% and they can use membership card points for paying the bill.
+
+Since the final amount calculation which is done in the payBill() of parent Customer class will not suit for all the customer types, we need to have separate implementation for this method in each of the child classes with respect to each customer type.
+
+So, in this scenario, the payBill() of the child classes will override the implementation of payBill() present in the parent class. This is said to be method overriding.
+
+public class Customer {
+	private String customerId;
+	private String customerName;
+	private long contactNumber;
+	private Address address;
+	public Customer(String customerId, String customerName, long contactNumber,
+			Address address) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+	}
+	public double payBill(double totalPrice) {
+		System.out.println("Final bill for the customer is calculated here");
+		return totalPrice;
+	}
+	// displayCustomerDetails()
+	// updateDetails() overloaded methods
+	// getter and setter methods
+}
+
+In the below code, payBill() is overridden in the RegularCustomer to include the 5% discount.
+
+public class RegularCustomer extends Customer {
+	private float discountPercentage;
+	public RegularCustomer(String custId, String custName, long mobileNo,
+			Address address) {
+		super(custId, custName, mobileNo, address);
+		this.discountPercentage = 5.0f;
+	}
+	@Override
+	public double payBill(double totalPrice) {
+		double priceAfterDiscount = totalPrice
+				* (1 - (discountPercentage / 100));
+		return priceAfterDiscount;
+	}
+	// getter and setter methods
+}
+
+- Case 1
+
+We will now see how these overridden methods can be invoked. Consider the Tester class given below:
+
+public class Tester {
+	public static void main(String[] args) {
+		// Customer object created
+		Customer customer = new Customer("C101", "Stephen Abram", 7856341287L,
+				new Address("D089", "St. Louis Street", "Springfield", 62729));
+		// payBill() is invoked
+		double amount = customer.payBill(40.0);
+		System.out.println("Final bill amount is $" + (int) (amount * 100)/ 100.0);
+	}
+}
+Which method do you think will be invoked?
+
+In the above case, payBill() from the parent class Customer will be invoked and the output will be:
+
+Final bill for the customer is calculated here
+
+Final bill amount is $40.0
+
+- Case 2
+
+Now consider the below code:
+
+//Regular Customer object created
+RegularCustomer regularCustomer = new RegularCustomer("C101",
+		"Stephen Abram", 7856341287L, new Address("D089",
+				"St. Louis Street", "Springfield", 62729));
+// payBill() is invoked
+double amount = regularCustomer.payBill(40.0);
+System.out.println("Final bill amount is $" + (int) (amount * 100)/ 100.0);
+Which method do you think will be invoked in this case?
+
+In the above case, payBill() of the child class RegularCustomer will be invoked and the output will be:
+
+Final bill amount is $37.99
+
+- Case 3:
+
+Now, consider another case of calling an overridden method.
+
+Customer regularCustomer = new RegularCustomer("C101", "Stephen Abram", 7856341287L, new Address("D089", "St. Louis Street", "Springfield", 62729));
+double amount = regularCustomer.payBill(40.0);
+
+Which method do you think will be invoked in this case?
+
+The answer is payBill() of the child class RegularCustomer.
+
+# Dynamic Binding
+
+You will now understand the reason behind the output of the previous code.
+
+A parent class reference can refer to a child class object.
+
+		(Parent refernce)
+Customer regularCustomer = new RegularCustomer();
+								(Child Obj)
+
+Only the overridden methods can be called using the parent class reference. Any new method created in the child class will not be accessible using the parent class reference. 
+
+The version of the method that will be called is determined by the object, and this decision is taken at runtime. This is called Dynamic binding.
+
+Static methods are not overridden. They will be called based on the type of reference used.
+
+Note: When a base class is specialized into child classes, instantiating the base class is not a good practice.
+
+
+# Genric Method Tryout
+
+Dynamic binding also allows the programmer to have generic methods.
+Generic methods will have the parent type as the formal argument. Such methods accepting the parent type allows working with the objects of it as well as child type.
+The code given below shows an example of a generic method accepting the parent reference as the argument.
+
+
+```
+class DynamicBindingTester {
+	public static void main(String[] args) {
+		Employee employee = new Employee();
+		Manager manager = new Manager();
+		Employee eduEmployee = new Educator();
+		Educator managerEdu = new Manager();
+		
+		displayEmployeeDetails(employee);
+		displayEmployeeDetails(manager);
+		displayEmployeeDetails(eduEmployee);
+		displayEmployeeDetails(managerEdu);
+	}
+	
+	// Employee reference can accept its object and any of the child object 
+	public static void displayEmployeeDetails(Employee employee) {
+		employee.displayDetails();	// displayDetails invoked will be based on the object received
+	}
+}
+
+class Employee {
+	String name = "James Anthony";
+	
+	public void displayDetails(){
+		System.out.println(name+" is an employee");
+	}	
+}
+class Educator extends Employee {
+	public void displayDetails(){
+		System.out.println(name+" is an educator");
+	}
+}
+class Manager extends Educator {
+	public void displayDetails(){
+		System.out.println(name+" is a manager");
+	}
+}
+
+```
+
+# Annotations
+
+Have you noticed that @Override is mentioned on top of the overridden methods?
+
+This is called an annotation. It is like an information for the compiler or JVM and provides additional meaning to the code.
+
+An annotation is a meta-data that provides data about the program and is not part of the program itself.
+
+Its purpose is to give additional information to the compiler, or for some processing during compile-time or runtime. It can be added to classes, methods, variables, parameters and packages.
+
+The @Override annotation is used with methods which ensures that the method is actually overriding a parent method. If it is used on a method which does not override any parent method, a compilation error occurs.
+
+What happens, if @Override annotation is not used with an overridden method?
+
+While it is not required to use this annotation when overriding a method, it helps to prevent errors. If a method marked with @Override fails to correctly override a method from one of its super classes, the compiler generates an error.
+
+Not having this annotation can cause warnings. But having this annotation with no super class that has a same method signature will result in an error.
+
+@Override annotation helps in avoiding refactoring errors. If the method in the super class is renamed, but not the overridden method, then also it will give an error.
+
+# Super
+
+You have already seen that super keyword can be used to invoke the constructors of parent class.
+
+super keyword can also be used for
+
+invoking a parent class method from a child class method 
+
+accessing a parent class instance variable in the child class in case there is a variable in the child class also with the same name
+
+### Super Scenario
+
+Consider the PremiumCustomer class which is the child class of RegularCustomer.
+
+While calculating the final bill to be paid for the premium customer, discount needs to be applied but the discount value is different from that of a regular customer.
+
+The code for PremiumCustomer class is as shown below:
+
+class PremiumCustomer extends RegularCustomer {
+	public PremiumCustomer(String custId, String custName, long mobileNo,
+			Address address) {
+		super(custId, custName, mobileNo, address);
+		this.setDiscountPercentage(8.0f);
+	}
+	@Override
+	public double payBill(double totalPrice) {
+		double priceAfterDiscount = totalPrice
+				* (1 - (this.getDiscountPercentage() / 100));
+		return priceAfterDiscount;
+	}
+}
+super is used in the child class constructor to call the parent class constructor.
+
+Now consider the payBill() method in which final bill is calculated after applying discount.
+
+The discount variable is initialized to the fixed value 8% in the constructor of the PremiumCustomer class and the calculation of the bill amount is done in the payBill method. The same calculation of applying discount is done in the payBill() method of the parent class, i.e.,  RegularCustomer class.
+
+This redundant calculation can be avoided by calling the parent class method in the child class method using super.
+
+payBill() method of the PremiumCustomer class will then look as follows:
+
+@Override
+public double payBill(double totalPrice) {
+    double priceAfterDiscount = super.payBill(totalPrice);
+    return priceAfterDiscount;
+}
+
+Here, payBill() method of the RegularCustomer will be called where the final bill amount will be calculated and returned to the payBill() method of the PremiumCustomer class.
+
+- Let us have a look at one more code snippet.
+
+public class Employee {
+	public float salary = 25000f;
+	// Other fields and methods
+}
+public class Manager extends Employee {
+	private float salary;
+	private float bonus;
+	public void calculateSalary() {
+		this.salary = super.salary + bonus;
+	}
+	public void getBonus() {
+		return bonus;
+	}
+	public void setBonus(float bonus) {
+		this.bonus = bonus;
+	}
+	public void getSalary() {
+		return salary;
+	}
+	public void setSalary(float salary) {
+		this.salary = salary;
+	}
+}
+public class Tester {
+	public static void main(String[] args) {
+		Manager manager = new Manager();
+		manager.setBonus(2000f);
+		manager.calculateSalary();
+		System.out.println("Manager Salary : " + manager.getSalary());
+	}
+}
+In the above given code, salary attribute is present in both the parent (Employee) and the child (Manager) but the salary component of Manager class will be having an additional component of bonus. In order to calculate the actual salary of the manager, fixed salary of the Employee class is required.
+
+Thus, in order to access the instance variable of the parent class inside the child class, super is used.
+
+# Comparison of MOL vs MOR
+
+Method overloading is a feature through which a class can have multiple methods with the same name but different signature.
+
+Method overriding is a feature that allows a subclass or child class to have a method with the same name and signature as that of the parent class.
+
+Overloading is an example of compile-time polymorphism as the decision about which method has to be invoked is taken during compilation time.
+
+Overriding is an example of runtime polymorphism as the decision about which method has to be invoked is taken during runtime.
+
+# equals()
+
+Why are the objects in the previous try out code different, even though the values of the member variables are same?
+
+The == operator which is used to compare two Food objects compares the objects with respect to their memory address.
+
+Thus, even though they have the same values of member variables, they are two different objects pointing to two different memory locations.
+
+Whenever two objects are to be compared based on the values of the member variables, equals() method of Object class can be overridden.
+
+equals() compares objects to check for equality
+
+By default, equals() uses memory address to compare objects for equality (just like ==)
+
+To make it work for different requirements, it needs to be overridden in the classes
+
+// equals method of Object class overridden for comparing two Food objects
+// based on foodName and foodType
+public boolean equals(Object obj) {
+	Food otherFood = (Food) obj;
+	if (this.foodName.equals(otherFood.foodName)) {
+		if (this.foodType.equals(otherFood.foodType))
+			return true;
+	}
+	return false;
+}
+In the above scenario,
+
+equals() returns true if the foodName and foodType of two Food objects are same
+
+type casting is done for the received object to cast it to Food object
+
+otherFood represents the second Food object received and is compared with the Food object using which equals() is invoked
+
+## equal tryout
+
+class Food {
+
+	private String foodName;
+	private String cuisine;
+	private String foodType;
+	private int quantityAvailable;
+	private double unitPrice;
+
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
+	public String getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(String cuisine) {
+		this.cuisine = cuisine;
+	}
+
+	public String getFoodType() {
+		return foodType;
+	}
+
+	public void setFoodType(String foodType) {
+		this.foodType = foodType;
+	}
+
+	public int getQuantityAvailable() {
+		return quantityAvailable;
+	}
+
+	public void setQuantityAvailable(int quantityAvailable) {
+		this.quantityAvailable = quantityAvailable;
+	}
+
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	// equals method of Object class overridden for comparing two Food objects
+	// based on foodName and foodType
+	@Override
+	public boolean equals(Object obj) {
+		Food otherFood = (Food) obj;
+		if (this.foodName.equals(otherFood.foodName)) {
+			if (this.foodType.equals(otherFood.foodType))
+				return true;
+		}
+		return false;
+	}
+}
+
+class Tester {
+
+	public static void main(String[] args) {
+		Food foodOne = new Food();
+		foodOne.setFoodName("Sandwich");
+		foodOne.setCuisine("Continental");
+		foodOne.setFoodType("Veg");
+		foodOne.setQuantityAvailable(100);
+		foodOne.setUnitPrice(10);
+
+		Food foodTwo = new Food();
+		foodTwo.setFoodName("Sandwich");
+		foodTwo.setCuisine("Continental");
+		foodTwo.setFoodType("Veg");
+		foodTwo.setQuantityAvailable(200);
+		foodTwo.setUnitPrice(10);
+
+		if (foodOne.equals(foodTwo)) {
+			System.out.println("foodOne and foodTwo are same!");
+		} else {
+			System.out.println("foodOne and foodTwo are different!");
+		}
+
+		Food foodThree = new Food();
+		foodThree.setFoodName("Burger");
+		foodThree.setCuisine("Continental");
+		foodThree.setFoodType("Veg");
+		foodThree.setQuantityAvailable(100);
+		foodThree.setUnitPrice(10);
+
+		if (foodOne.equals(foodThree)) {
+			System.out.println("foodOne and foodThree are same!");
+		} else {
+			System.out.println("foodOne and foodThree are different!");
+		}
+	}
+}
+
+# HashCode
+
+Next, you will see the hashCode() method.
+
+hashCode() uses an object's data to generate a hash value, which should be a 32 bit integer
+
+By default, it derives the hash value based on the memory address of the object being used
+
+If two objects are equal according to the equals() method, hashCode() must produce the same integer value for the two objects
+
+It is important to understand that if the hash codes of two objects are same, it doesn't prove that the objects are equal, i.e., it is possible for two unequal objects to have the same hash codes. 
+
+hashCode() uses a formula to generate an integer based on the same attribute
+
+Any formula can be used for generating the hash code as long as it generates the same value for same objects
+// hashCode method overridden
+public int hashCode() {
+	int result = 1;
+	result = result + (foodName.hashCode());
+	return result;
+}
+In the code snippet of equals() and in the code snippet given over here for hashCode(), equals() and hashCode() are applied on String.
+
+The String class is also a subclass of the Object class. It already overrides the equals() and hashCode() methods.
+
+Note: While comparing String objects for equality, equals() method should be used since it is already overridden to compare the values.
+
+## Hascode tryout
+
+```
+class Food {
+
+	private String foodName;
+	private String cuisine;
+	private String foodType;
+	private int quantityAvailable;
+	private double unitPrice;
+
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
+	public String getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(String cuisine) {
+		this.cuisine = cuisine;
+	}
+
+	public String getFoodType() {
+		return foodType;
+	}
+
+	public void setFoodType(String foodType) {
+		this.foodType = foodType;
+	}
+
+	public int getQuantityAvailable() {
+		return quantityAvailable;
+	}
+
+	public void setQuantityAvailable(int quantityAvailable) {
+		this.quantityAvailable = quantityAvailable;
+	}
+
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	// equals method of Object class overridden for comparing two Food objects
+	// based on foodName and foodType
+	@Override
+	public boolean equals(Object obj) {
+		Food otherFood = (Food) obj;
+		if (this.foodName.equals(otherFood.foodName)) {
+			if (this.foodType.equals(otherFood.foodType))
+				return true;
+		}
+		return false;
+	}
+
+	// hashCode method overridden
+	@Override
+	public int hashCode() {
+		int result = 1;
+		result = result + (foodName.hashCode());
+		return result;
+	}
+}
+
+class Tester {
+
+	public static void main(String[] args) {
+		Food foodOne = new Food();
+		foodOne.setFoodName("Sandwich");
+		foodOne.setCuisine("Continental");
+		foodOne.setFoodType("Veg");
+		foodOne.setQuantityAvailable(100);
+		foodOne.setUnitPrice(10);
+
+		Food foodTwo = new Food();
+		foodTwo.setFoodName("Sandwich");
+		foodTwo.setCuisine("Continental");
+		foodTwo.setFoodType("Veg");
+		foodTwo.setQuantityAvailable(200);
+		foodTwo.setUnitPrice(10);
+
+		if (foodOne.equals(foodTwo)) {
+			System.out.println("foodOne and foodTwo are same!");
+		} else {
+			System.out.println("foodOne and foodTwo are different!");
+		}
+
+		System.out.println("Hash code for foodOne : " + foodOne.hashCode());
+		System.out.println("Hash code for foodTwo : " + foodTwo.hashCode());
+
+		Food foodThree = new Food();
+		foodThree.setFoodName("Burger");
+		foodThree.setCuisine("Continental");
+		foodThree.setFoodType("Veg");
+		foodThree.setQuantityAvailable(100);
+		foodThree.setUnitPrice(10);
+
+		if (foodOne.equals(foodThree)) {
+			System.out.println("foodOne and foodThree are same!");
+		} else {
+			System.out.println("foodOne and foodThree are different!");
+		}
+
+		System.out.println("Hash code for foodOne : " + foodOne.hashCode());
+		System.out.println("Hash code for foodThree : " + foodThree.hashCode());
+
+	}
+}
+
+```
+
+# STring comparison
+
+Both == and equals() are used
+```
+class Tester {
+
+	public static void main(String[] args) {
+		String name1 = "Jennifer";
+		String name2 = "Jennifer";
+		String name3 = new String("Jennifer");
+
+		System.out.println(name1 == name2); // both name1 and name2 refer to
+											// same object
+		System.out.println(name1 == name3); // name3 is a different object
+											// created using new
+		System.out.println(name2 == name3); // name3 is a different object
+											// created using new
+
+		System.out.println(name1.equals(name2));
+		System.out.println(name1.equals(name3));
+		System.out.println(name2.equals(name3));
+		// Values are being compared in the above three cases and thus equals()
+		// returns true
+
+	}
+}
+
+```
+
+# toString Method
+
+Apart from equals() and hashCode(), the Object class provides another method named toString().
+
+The toString() method returns a textual representation of an object.
+
+By default, it returns a string consisting of the name of the object's class, the '@' character, and the unsigned hexadecimal representation of the hash code of the object. E.g. - Food@af7d0676
+
+It should be overridden to provide a meaningful textual representation.
+
+The returned text should be concise, easy to read and informative.
+
+public String toString() {
+}
+
+## toString tryout
+
+```
+class Food {
+
+	private String foodName;
+	private String cuisine;
+	private String foodType;
+	private int quantityAvailable;
+	private double unitPrice;
+
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
+	public String getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(String cuisine) {
+		this.cuisine = cuisine;
+	}
+
+	public String getFoodType() {
+		return foodType;
+	}
+
+	public void setFoodType(String foodType) {
+		this.foodType = foodType;
+	}
+
+	public int getQuantityAvailable() {
+		return quantityAvailable;
+	}
+
+	public void setQuantityAvailable(int quantityAvailable) {
+		this.quantityAvailable = quantityAvailable;
+	}
+
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	// equals method of Object class overridden for comparing two Food objects
+	// based on foodName and foodType
+	@Override
+	public boolean equals(Object obj) {
+		Food otherFood = (Food) obj;
+		if (this.foodName.equals(otherFood.foodName)) {
+			if (this.foodType.equals(otherFood.foodType))
+				return true;
+		}
+		return false;
+	}
+
+	// hashCode method overridden
+	@Override
+	public int hashCode() {
+		int result = 1;
+		result = result + (foodName.hashCode());
+		return result;
+	}
+
+	// toString is overridden to provide a custom textual representation
+	@Override
+	public String toString() {
+		return "Food -> " + "Food name: " + this.foodName + ", Cuisine: "
+				+ this.cuisine + ", Food type: " + this.foodType
+				+ ", Quantity avaialable: " + this.quantityAvailable
+				+ ", unitPrice: " + unitPrice;
+	}
+}
+
+class Tester {
+
+	public static void main(String[] args) {
+		Food foodOne = new Food();
+		foodOne.setFoodName("Sandwich");
+		foodOne.setCuisine("Continental");
+		foodOne.setFoodType("Veg");
+		foodOne.setQuantityAvailable(100);
+		foodOne.setUnitPrice(10);
+
+		// Comment the toString() in the Food class and execute the code
+		System.out.println(foodOne);
+	}
+}
+```
+Food -> Food name: Sandwich, Cuisine: Continental, Food type: Veg, Quantity avaialable: 100, unitPrice: 10.0
+
+Output if tosString commented : Food@7aajnhb55
+
+# Wrapper Class
+The primitive data types in Java do not inherit the Object class as they are not classes but sometimes, it is required to convert data types into objects in Java programming.
+
+To convert data types into objects and to inherit the Object class, Java has Boolean, Character, Integer, Long, Float and Double classes which are called as Wrapper Class.
+
+Wrapper classes help in representing the primitive data types as an object. They form a wrapping around the primitive values to represent them as objects.
+
+They belong to the java.lang package as part of the Java library.
+
+Wherever, the data type is required as an object, the objects of the Wrapper classes can be used. Wrapper classes include methods to unwrap the object and give back the data type.
+
+### wrapper classes tryout
+
+```
+class Tester {
+
+	public static void main(String[] args) {
+
+		// Comparison of Integer objects
+		Integer x = 5;
+		Integer y = new Integer(5); // int data converted to Integer object
+		System.out.println("x == y: " + (x == y));
+		System.out.println("x.equals(y): " + x.equals(y));
+
+		// Wrap the primitive content into wrapper class objects
+		Integer number = Integer.valueOf(x);
+		System.out.println("Wrapping x to its Integer: " + number);
+		System.out.println("Check if number is of type Integer: "
+				+ (number instanceof Integer));
+
+		// Wrappers can be used to convert numeric strings to numeric datatypes
+		String numStr = "123";
+		int numInt = Integer.parseInt(numStr);
+		System.out.println("String to integer: " + numInt);
+
+		String doubleStr = "123.45";
+		double numDouble = Double.parseDouble(doubleStr);
+		System.out.println("String to double: " + numDouble);
+
+		// Type casting cannot be used to convert any wrapper type to another,
+		// it will give compilation error
+		/* Uncomment the below code and observe the output*/
+// 		Long phoneNoLong = (Long) new Integer(44281234); 
+
+		// We can make use of methods like intValue(), byteValue(),
+		// floatValue(), etc. for conversion
+		Integer phoneNo = 44281234;
+		// longValue() converts the Integer value to long data type
+		Long phoneNoLong = phoneNo.longValue(); 
+		System.out.println("Integer to Long: " + phoneNoLong);
+
+		// Converts the Integer object to binary value
+		System.out.println("Integer 5 as binary string: "
+				+ Integer.toBinaryString(5));
+	}
+}
+```
+
+# ABstract
+
+Customer class in the SwiftFood app scenario has a payBill method. The implementation of this method completely depends on the type of customer. So, we implemented this method in all our customer types (child classes) by overriding the parent method.
+
+Thus, the parent class method implementation doesn’t actually have any significance but it is necessary for all the child classes to provide a proper implementation for the method.
+
+So, this means the parent class Customer will not have any implementation for the payBill method but we need to enforce that the child classes implement the payBill() method.
+
+This can be enforced with the help of abstract keyword as shown below.
+
+abstract public class Customer {
+	// Instance variables and constructor
+	public abstract double payBill(double totalPrice);
+	// displayCustomerDetails()
+	// updateDetails() overloaded methods
+	// getter and setter methods
+}
+
+Here, the method payBill doesn’t have any implementation because it depends on the customer type, whether it is a guest, regular customer or premium customer.
+
+Since it cannot have any implementation, it has been marked as abstract.
+
+Since the method payBill is abstract in the Customer class, the class itself becomes incomplete and demands for a child class to complete it.
+
+For marking the class as incomplete, abstract keyword is used with the class also. Any class extending this abstract class must provide the implementation of the abstract methods.
+
+The abstract keyword signifies that something is not complete. It can be used with classes and methods.
+
+An abstract method is a method without any definition, i.e., the body. The signature of an abstract method must be preceded by the abstract keyword.
+```
+public abstract double payBill(double totalPrice);
+```
+An abstract class is a class which is incomplete and cannot be instantiated. 
+```
+abstract public class Customer {}
+```
+Some points that you should be knowing about abstract class are:
+
+- An abstract class encapsulates the common behaviors of all its child classes with the help of abstract methods
+
+- Concrete (non-abstract) classes which extend an abstract class must implement all the abstract methods. Otherwise, they should be made abstract as well.
+
+- If a class contains at least one abstract method, the class should be abstract.
+
+- A class can be made abstract even without any abstract methods.
+
+We know a parent class reference can refer to a child class object. So, if a reference belongs to an abstract class, you can be sure that the object it refers to will always be of its child type.
+
+Thus, abstract classes enforce inheritance (since they can’t be instantiated)
+
+and
+
+abstract methods enforce overriding (since they are incomplete with no implementation)
+
+# Abstract class and methods
+
+```
+abstract class GrandParent {
+	abstract void display();
+}
+
+abstract class Parent extends GrandParent {	// Can we remove the abstract keyword from here?
+	final void displayInParent() {
+		System.out.println("In Parent");
+	}
+}
+
+class Child extends Parent {
+	void display() {
+		System.out.println("Child completes Parent and GrandParent");
+	}
+}
+
+final class GrandChild extends Child {
+	void display() {
+		System.out.println("In GrandChild");
+		super.display();
+	}
+}
+
+//Uncomment the code given below and observe
+//class GreatGrandChild extends GrandChild { }		    
+
+class Tester {
+	public static void main(String[] args) {
+		new GrandChild().display();
+	}
+}
+```
+
+# instanceOf tryout
+
+The insatnceOf operator is used to test whether a refernce variable is an insatnce of the spicified type(class or subclass or interface)
+
+```
+abstract class Employee{
+    private String employeeId;
+    private String name;
+    private static int counter;
+    
+    static{
+        counter=101;
+    }
+    
+    public Employee(String name){
+        //Checking the type of the current instance
+        if(this instanceof PermanentEmployee)
+			employeeId="P"+counter++;
+		else if(this instanceof ContractEmployee)
+			employeeId="C"+counter++;
+		setName(name);
+    }
+    
+    public abstract void calculateSalary();
+    
+    public String getEmployeeId(){
+        return employeeId;
+    }
+    
+    public String getName(){
+        return name;
+    }
+    
+    public void setName(String name){
+        this.name=name;
+    }
+}
+
+class PermanentEmployee extends Employee{
+    
+    public PermanentEmployee(String name){
+        super(name);
+    }
+    
+    @Override
+    public void calculateSalary(){
+        System.out.println("Calculating salary of PermanentEmployee");
+    }
+    
+    public void calculateBonus(){
+        System.out.println("Calculating bonus of PermanentEmployee");
+    }
+}
+
+
+class ContractEmployee extends Employee{
+    
+    public ContractEmployee(String name){
+        super(name);
+    }
+    
+    @Override
+    public void calculateSalary(){
+        System.out.println("Calculating salary of ContractEmployee");
+    }
+
+}
+
+class SalarySlipGenerator{
+    public void displaySalarySlip(Employee employee){
+        employee.calculateSalary();
+        //Checking if employee is an instance of PermanentEmployee
+        if(employee instanceof PermanentEmployee){
+            //Type casting parent class reference to child class for accessing child class method
+            PermanentEmployee permanentEmployee=(PermanentEmployee)employee;
+			permanentEmployee.calculateBonus();
+        }
+    }
+}
+
+
+class Tester{
+    public static void main(String[] args) {
+        PermanentEmployee permanentEmployee=new PermanentEmployee("Angie");
+        System.out.println("Details of permanent employee");
+        System.out.println("Employee Id: "+permanentEmployee.getEmployeeId());
+        System.out.println("Name: "+permanentEmployee.getName());
+    
+        System.out.println();
+        
+        ContractEmployee contractEmployee=new ContractEmployee("Roger");
+        System.out.println("Details of contract employee");
+        System.out.println("Employee Id: "+contractEmployee.getEmployeeId());
+        System.out.println("Name: "+contractEmployee.getName());
+    
+        System.out.println();
+    
+        SalarySlipGenerator salarySlipGenerator=new SalarySlipGenerator();
+        System.out.println("Salary of permanent employee");
+        salarySlipGenerator.displaySalarySlip(permanentEmployee);
+        
+        System.out.println();
+    
+        System.out.println("Salary of contract employee");
+        salarySlipGenerator.displaySalarySlip(contractEmployee);
+    }
+}
+```
+
+# Finals
+
+we have used some constant values for mathematical calculations. For example, to calculate the area of circle we use the formula πr2 where π is a constant whose value is 3.14 and r is the radius of the circle.
+
+In programming, we may encounter situations where we may have to create components that must remain constant, i.e., never change. In such cases, the final keyword can be used.
+
+The final keyword can be used with classes, variables and methods. The details are diagrammatically shown below.
+
+Also, observe the identifier naming convention for final fields.
+
+- Variables : final field value cannot be changed once it is initialized i.e it becomes a consatnt
+
+- Methods : final methods cannot be overridden in sub-class
+
+- Classes : Cannot ve sub-clasess, it cannot be extended.
+
+## Final avraible tryout
+
+- the value of num cannot be changed. Errror code
+
+```
+class Demo {
+	final int num = 10; // final variable
+
+	public void changeNumber() {
+		num = 20;
+		System.out.println("The value of num is " + num);
+	}
+}
+
+class Tester {
+
+	public static void main(String args[]) {
+		Demo demo = new Demo();
+		demo.changeNumber();
+	}
+}
+```
+
+## Final methoud tryput
+
+error throw cannot be orerride
+
+```
+class A {
+	final public void example() {
+		System.out.println("A Class Method");
+	}
+}
+
+class B extends A {
+	@Override
+	public void example() {
+		System.out.println("B Class Method");
+	}
+
+}
+
+class Tester {
+	public static void main(String[] args) {
+		B obj = new B();
+		obj.example();
+	}
+
+}
+```
+
+## Final M tryout
+
+No error
+```
+class A {
+	final void example() {
+		System.out.println("Class A method");
+	}
+}
+
+class B extends A {
+	void demo() {
+		System.out.println("Class B method");
+	}
+}
+
+class Tester {
+	public static void main(String[] args) {
+		B obj = new B();
+		obj.example();
+	}
+
+}
+
+```
+
+## Final class tryout
+
+```
+final class A {
+}
+
+class B extends A {
+	void demo() {
+		System.out.println("In class B");
+	}
+}
+
+class Tester {
+	public static void main(String args[]) {
+		B obj = new B();
+		obj.demo();
+	}
+}
+```
+
+## Blank Final Variable
+
+If a final variable is not initialized during declaration, it is known as blank final variable. We can initialize a blank final variable only in the constructor, else there will be a compilation error. So, if you are marking a variable as final, it can be initialized only once either while declaring or in the constructor of the class.
+
+```
+class Demo {
+	final int num; // blank final variable
+
+	public Demo() {
+		num = 10;
+	}
+
+	public void displayNumber() {
+		System.out.println(num);
+	}
+}
+
+class Tester {
+	public static void main(String args[]) {
+		Demo demo = new Demo();
+		demo.displayNumber();
+	}
+}
+```
+
+
+# Interface
+
+You know that the Premium customers are provided with a membership card using which they can redeem points. Such membership cards can be provided by several businesses to their customers and not just by SwiftFood app. This calls for setting a contract which can be followed by all the businesses who want to provide membership cards.
+
+This setting up of contract can be implemented by using Interfaces in object oriented programming.
+
+An interface is used to define a generic template which can be implemented by various classes.
+
+It contains method signatures and constant declarations
+
+The methods declared in an interface are implicitly public and abstract and the data fields are implicitly public, static and final, i.e., constants
+
+An interface can extend more than one interface and a class can implement more than one interface. This can be used to simulate multiple inheritance in Java
+
+A class can extend from only one class but can implement any number of interfaces
+
+The implements keyword is used to implement an interface. The classes implementing an interface must implement all the specified methods. Otherwise, they should be made abstract
+
+An interface creates a type. Hence, its reference can be used to refer to the objects of the classes which implement that interface. This leads to dynamic binding
+
+Since Java 8, an interface can also have default and static methods. This is not discussed in this course
+
+Observe the below code. The interface specifies the behaviors by declaring methods but does not provide the implementations. Using interface, we specify what is to be done without telling how. 
+
+public interface PremiumCards {
+	int WELCOME_POINTS = 100;
+	double redeemPoints(double totalPrice);
+	void addPoints(double money);
+}
+
+## Interface try
+
+```
+interface DemoOne {
+	int number = 5;
+}
+
+interface DemoTwo extends DemoOne{
+	void display();
+}
+
+class DemoClassOne implements DemoTwo {
+	public void display() {
+		System.out.println(number);
+	}
+}
+
+class Tester {
+	public static void main(String[] args) {
+		DemoTwo obj = new DemoClassOne();
+		obj.display();
+	}
+}
+```
 
 # Packages
 
@@ -1119,6 +2445,889 @@ Anything declared as protected can be accessible to all the classes inside the s
 - The name of the package must be the same as the directory under which the file is saved.
 
 - When importing another package, package declaration must be the first statement followed by package import.
+
+# Exception :
+
+The runtime errors shown previously are called as exceptions and the process of handling the exceptions is known as Exception Handling.
+
+## Try catch
+
+In order to handle exceptions, the first step is to identify the code which may generate exceptions. The set of statements that may generate an exception are enclosed in a block known as try block. The try block contains a set of statements where an exception can occur.
+
+The second step is to handle those exceptions. In order to handle those exceptions which get raised in the try block, we use the catch block. A catch block is where you handle the exceptions, i.e., the catch block specifies what is to be done when an exception occurs.
+
+A try block is always followed by a catch block.
+
+Syntax:
+
+try
+{
+     // statements that may cause an exception
+}
+catch (exceptionType e) ‏
+{
+     // error handling code
+}
+
+### Try catch tryout
+
+```
+class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		}
+	    catch(ArithmeticException e) {
+            //This block will execute only if any Arithmetic exception is thrown in try block
+		    System.out.println("Divide by Zero exception occurred!");
+	    }
+	}
+}
+
+class Tester{
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = {96,65,76};
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+
+```
+
+# Multiple catch blocks
+
+In the previous tryout, we have handled the issue of divide by zero exception by using the try-catch block.
+
+Replace the calculateAverageMarks() in the previous tryout with the below method implementation. Try out the updated code and observe the output. 
+```
+public void calculateAverageMarks() {
+	int sum = 0;
+	int totalSubjects = 0;
+	try {
+		for (int i = 0; i <= marks.length; i++) {
+			++totalSubjects;
+			sum += marks[i];
+		}
+		this.averageMarks = sum / totalSubjects;
+		System.out.println("Average Marks: " + this.averageMarks);
+	} catch (ArithmeticException e) {
+		System.out.println("Divide by Zero exception occurred!");
+	}
+}
+```
+In the previous tryout, we have handled the issue of divide by zero exception by using the try-catch block.
+
+Replace the calculateAverageMarks() in the previous tryout with the below method implementation. Try out the updated code and observe the output. 
+```
+public void calculateAverageMarks() {
+	int sum = 0;
+	int totalSubjects = 0;
+	try {
+		for (int i = 0; i <= marks.length; i++) {
+			++totalSubjects;
+			sum += marks[i];
+		}
+		this.averageMarks = sum / totalSubjects;
+		System.out.println("Average Marks: " + this.averageMarks);
+	} catch (ArithmeticException e) {
+		System.out.println("Divide by Zero exception occurred!");
+	}
+}
+```
+Array Indec out of range
+
+his is because the present catch block can handle only ArithmeticException whereas the current implementation of calculateAverage() encounters ArrayIndexOutOfBoundsException. In order to resolve this exception, we have to create one more catch block having the exception type as ArrayIndexOutOfBoundsException.
+
+In Java, a single try block can have several catch blocks associated with it. You can catch different exceptions in different catch blocks. When an exception occurs in the try block, one of the corresponding catch blocks that handles that particular exception executes. For example, if an arithmetic exception occurs in try block then the statements enclosed in the catch block for arithmetic exception executes.
+```
+catch(ArrayIndexOutOfBoundsException e) {
+	//This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+	System.out.println("Array index out of range exception occurred!");
+}	
+```				 
+After adding the above catch block in the calculateAverageMarks() method, the program will not display the system generated exception message. Instead, it will display the user-defined message.
+
+### Need for generic catch block
+
+Can we predict all the exceptions that can occur in a program?
+
+It is nearly difficult to predict all the possible exceptions and write the corresponding catch blocks. Then how can we catch the exception for which we don’t have corresponding catch block?
+
+Suppose we want to display the length of the student name in calculateAverage() and let us assume that studentName is not yet initialized.
+
+This will result in NullPointerException.
+
+### Generic catch block
+
+In order to catch an exception for which the corresponding catch block is not present in the program, we can use the generic exception catch block.
+
+Syntax:
+```
+catch(Exception e) {
+	//This block can handle all types of exceptions
+	System.out.println("Some error occurred");
+}
+```
+The generic exception handler can handle all types of exceptions, therefore, it should be placed at the end of all the catch blocks.
+```
+catch(ArithmeticException e) {
+	//This block will only execute if any Arithmetic exception occurs in try block
+	System.out.println("Divide by Zero exception occurred!");
+}
+catch(ArrayIndexOutOfBoundsException e) {
+	//This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+	System.out.println("Array index out of range exception occurred!");
+}
+catch( Exception e) {
+	//This block will handle all types of exceptions that occur in try block
+	System.out.println("Some error occurred!");
+}
+```
+
+### Placement of geenric catch block
+
+If you will try to place the generic catch block at any other place (start or middle) of the catch blocks, then it will result in a compilation error.
+
+```
+catch(ArithmeticException e) {
+	//This block will only execute if any Arithmetic exception occurs in try block
+	System.out.println("Divide by Zero exception occurred!");
+}
+catch(Exception e) {
+	//This block will handle all types of exceptions that occur in try block
+	System.out.println("Some error occurred!");
+}
+catch(ArrayIndexOutOfBoundsException e) {
+	//This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+	System.out.println("Array index out of range exception occurred!");
+}
+```
+
+
+# Nested try-Catch
+
+When a try-catch block is present inside another try block then it is called a nested try-catch block. 
+
+The syntax of nested try-catch is given below:
+```
+//main try block
+try{
+    statement 1;
+    statement 2;
+    //nested try-catch block
+    try{
+        statement 3;
+    }
+    catch(Exception ex){
+        //exception message
+    }
+}
+catch(Exception ex){
+    //exception message
+}
+```
+If the inner catch block is not able to handle the exception raised in the inner try block, then the execution moves to the outer catch block.
+
+Take a look at the below code to understand how nested try-catch works.
+```
+public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		//outer try block
+		try {
+			//inner try block
+			try {
+				for (int i = 0; i <marks.length;i++) {
+				    sum+=marks[i];
+			    }
+				this.averageMarks=sum/totalSubjects;//Exception will be raised as totalSubjects is 0 
+				System.out.println("Average Marks: "+ this.averageMarks);
+			}
+			//inner catch block
+			catch(ArithmeticException e) {
+		            //This block will only execute if any Arithmetic exception occurs in try block
+				    System.out.println("Divide by Zero exception occurred!");
+			    }
+			catch(ArrayIndexOutOfBoundsException e) {
+				//This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+				System.out.println("Array index out of range exception occurred!");
+			} 
+		}
+		//outer catch block
+		catch(Exception e) {
+			//This block will handle all types of exceptions that occur in try block
+			System.out.println("Some error occurred!");
+		}
+	   
+}
+```
+
+## Nested try catch tryout
+
+```
+class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		//outer try block
+		try {
+			//inner try block
+			try {
+				for (int i = 0; i <marks.length;i++) {
+				    sum+=marks[i];
+			    }
+				this.averageMarks=sum/totalSubjects;//Exception will be raised as totalSubjects is 0 
+				System.out.println("Average Marks: "+ this.averageMarks);
+			}
+			//inner catch block
+			catch(ArithmeticException e) {
+		            //This block will only execute if any Arithmetic exception occurs in try block
+				    System.out.println("Divide by Zero exception occurred!");
+			    }
+			catch(ArrayIndexOutOfBoundsException e) {
+				//This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+				System.out.println("Array index out of range exception occurred!");
+			} 
+		}
+		//outer catch block
+		catch(Exception e) {
+			//This block will handle all types of exceptions that occur in try block
+			System.out.println("Some error occurred!");
+		}
+	   
+	}
+}
+
+class Tester{
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = {96,65,76};
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+
+```
+
+## Finally
+
+A finally block contains all the crucial statements that must be executed irrespective of whether an exception occurs or not. The statements present in this block will always execute regardless of whether an exception occurs in a try block or not. finally block is optional and can be used only with a try-catch block.
+
+Syntax:
+```
+try{
+     //Statements that may cause an exception
+}
+catch (ExceptionType e) ‏{
+     //Error handling code
+}
+finally {
+	//Statements that must be executed 
+}
+```
+
+## Finally Tryout
+```
+class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setStudentName(String name) {
+		this.name = name;
+	}
+
+	public int[] getMarks() {
+		return marks;
+	}
+
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+
+	public void calculateAverageMarks() {
+		int sum = 0;
+		int totalSubjects = 0;
+		try {
+			// Comment the below line and observe the output
+			System.out.println("Name length : " + this.name.length());
+			for (int i = 0; i < marks.length; i++) {
+				++totalSubjects;
+				sum += marks[i];
+			}
+			this.averageMarks = sum / totalSubjects;
+			System.out.println("Average Marks: " + this.averageMarks);
+		}
+
+		catch (ArithmeticException e) {
+			/*This block will only execute if any 
+			 * Arithmetic exception occurs in try block
+			 */
+			System.out.println("Divide by Zero exception occurred!");
+		}
+
+		catch (ArrayIndexOutOfBoundsException e) {
+			/*This block will only execute if any 
+			 * ArrayIndexOutOfBoundsException occurs in try block
+			 */
+			System.out.println("Array index out of range exception occurred!");
+		} catch (Exception e) {
+			/* This block will handle all types of exceptions 
+			 * that occur in try block
+			 */
+			System.out.println("Some error occurred!");
+		} finally {
+			/*This block will be executed irrespective of 
+			 * whether an exception occurs or not
+			 */
+			System.out.println("Thank you for using the application!");
+		}
+	}
+}
+
+class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, 65, 76 };
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+```
+
+## Types of Exceptions
+
+There are two different types of exceptions in Java:
+
+1. Checked Exception
+
+2. Unchecked Exception
+
+1. Checked Exception
+
+All exceptions other than runtime exceptions are known as Checked Exceptions as the compiler checks them during compilation to see whether the programmer has handled them or not. If these exceptions are not handled/declared in the program, you will get a compilation error. In this case, the programmers are forced to either handle these exceptions or declare to allow their propagation.
+
+ E.g. - SQLException, IOException, etc. are Checked Exceptions
+
+2. Unchecked Exception
+
+Unchecked exceptions are runtime exceptions. These exceptions are not checked at compile-time. So, the compiler does not check whether the programmer has handled them or not. In this case, the programmers are not forced to handle or declare their propagation.
+
+E.g. - ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException, etc. are Unchecked Exceptions
+
+
+# Throw
+
+Let us consider a scenario of populating the marks of 3 subjects for a student. Let us assume that the programmer has wrongly given one subject’s marks as -65.
+
+Is it possible to have marks as -65?
+
+Obviously not!
+
+Logically, this should not be the value of the accepted marks but the previous program will not raise any exception and average marks will be calculated with the wrong value.
+
+Why does the program not raise an exception in this case?
+
+The exception does not get raised because this marks being invalid is not one of the exception types that Java has defined. Here, if we want to raise an exception for negative marks, then we have to raise it manually. 
+
+In Java, we can define our own set of conditions or rules and throw an exception explicitly using throw keyword.
+
+For example, we can throw the exception if the value of the marks is negative using throw keyword.
+
+Syntax:
+```
+throw new <exceptionclass>("error message");
+```
+This is possible with any object of type Throwable.
+
+### Throw tryout
+
+```
+class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setStudentName(String name) {
+		this.name = name;
+	}
+
+	public int[] getMarks() {
+		return marks;
+	}
+
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+
+	public void calculateAverageMarks() {
+		int sum = 0;
+		int totalSubjects = 0;
+		try {
+			for (int i = 0; i < marks.length; i++) {
+				if (marks[i] < 0) {
+					// Throwing exception manually in case of negative marks
+					// value
+					throw new Exception("Marks must not be negative!");
+				}
+				++totalSubjects;
+				sum += marks[i];
+			}
+			this.averageMarks = sum / totalSubjects;
+			System.out.println("Average Marks: " + this.averageMarks);
+		}
+
+		catch (ArithmeticException e) {
+			// This block will only execute if any Arithmetic exception occurs
+			// in try block
+			System.out.println("Divide by Zero exception occurred!");
+		}
+
+		catch (ArrayIndexOutOfBoundsException e) {
+			// This block will only execute if any
+			// ArrayIndexOutOfBoundsException occurs in try block
+			System.out.println("Array index out of range exception occurred!");
+		} catch (Exception e) {
+			// This block will handle all the types of exceptions that occur in
+			// try block
+			// Error message is being displayed using getMessage() of Exception
+			// class
+			System.out.println(e.getMessage());
+
+		} finally {
+			// This block will be executed irrespective of whether an exception
+			// has occurred or not
+			System.out.println("Thank you for using the application!");
+		}
+	}
+}
+
+class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, -65, 76 };
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+```
+
+## User defined Exceotion
+In the previous try out, the negative marks exception was of type Exception. It would have been better if we could have differentiated the negative marks exception the way we were able to differentiate ArithmeticException from ArrayIndexOutOfBoundsException. 
+
+To make an application more flexible and manageable, Java allows us to have our own custom exceptions. This helps in working with specialized exceptions rather than a general one.
+
+We can create a user-defined exception class by extending the Exception class:
+
+Syntax:
+```
+class NegativeMarksException extends Exception  {
+	// Message
+}
+```
+We can also set a message using the parameterized constructor.
+```
+class NegativeMarksException extends Exception {
+	public NegativeMarksException(String message) {
+		super(message);// The message is being passed to the parent class
+			           // constructor as the detailed message for the exception
+	}
+}
+```
+Now instead of using the system defined exception, we can use user-defined exceptions while throwing the exception.
+
+## U D E Tryout
+```
+class NegativeMarksException extends Exception {
+	public NegativeMarksException(String message) {
+		super(message);
+	}
+}
+
+class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int[] getMarks() {
+		return marks;
+	}
+
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+
+	public void calculateAverageMarks() {
+		int sum = 0;
+		int totalSubjects = 0;
+		try {
+			for (int i = 0; i < marks.length; i++) {
+				if (marks[i] < 0) {
+					// Throwing User-defined exception in case of negative marks
+					// value
+					throw new NegativeMarksException(
+							"Marks must not be negative!");
+				}
+				++totalSubjects;
+				sum += marks[i];
+			}
+			this.averageMarks = sum / totalSubjects;
+			System.out.println("Average Marks: " + this.averageMarks);
+		}
+
+		catch (ArithmeticException e) {
+			// This block will execute only if any Arithmetic exception occurs
+			// in try block
+			System.out.println("Divide by Zero exception occurred!");
+		}
+
+		catch (ArrayIndexOutOfBoundsException e) {
+			// This block will execute only if any
+			// ArrayIndexOutOfBoundsException occurs in try block
+			System.out.println("Array index out of range exception occurred!");
+		} catch (NegativeMarksException e) {
+			// This block will execute only if any NegativeMarksException occurs
+			// in try block
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			// This block will handle all the types of exceptions that occur in
+			// try block
+			System.out.println(e.getMessage());
+
+		} finally {
+			// This block will be executed irrespective of whether an exception
+			// has occurred or not
+			System.out.println("Thank you for using the application!");
+		}
+	}
+}
+
+class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, -65, 76 };
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+```
+
+# Where to handle exception
+
+Till now we have defined the try-catch block in the method definition where the exceptions are getting raised. Instead of writing a try-catch block inside the method definition, we can write the method call also inside the try-catch block.
+
+If the exceptions are not handled in the method definition, then it propagates to the place where you have called that method automatically. Observe the below code.
+```
+class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+	public void calculateAverageMarks() {
+		int sum = 0;
+		int totalSubjects = 0;
+		for (int i = 0; i <= marks.length; i++) {
+			if (marks[i] < 0) {
+				// throw new Exception("Marks must not be negative");
+			}
+			++totalSubjects;
+			sum += marks[i];
+		}
+		this.averageMarks = sum / totalSubjects;
+		System.out.println("Average Marks is : " + this.averageMarks);
+	}
+}
+class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, 65, 76 };
+		student1.setMarks(marks);
+		try {
+			student1.calculateAverageMarks();
+		} catch (ArithmeticException e) {
+			// This block will execute only if any Arithmetic exception occurs
+			// in try block
+			System.out.println("Divide by Zero exception occurred!");
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			// This block will execute only if any
+			// ArrayIndexOutOfBoundsException occurs in try block
+			System.out.println("Array index out of range exception occurred!");
+		} catch (Exception e) {
+			// This block will handle all the types of exceptions that occur in
+			// try block
+			System.out.println(e.getMessage());
+		} finally {
+			// This block will be executed irrespective of whether an exception
+			// has occurred or not
+			System.out.println("Thank you for using the program!");
+		}
+	}
+}
+```
+
+# throws
+
+You have seen how to handle exceptions while calling the method as well as in the called method. You will now see how to propagate exceptions from the calling environment to the called environment.
+
+Uncomment the exception which is getting raised due to negative marks. Here the exception is getting raised with the help of throw keyword. This will also result in an Unresolved compilation problem.
+
+If a method does not handle a checked exception, the method must declare it using the throws keyword. The throws keyword appears at the end of a method's signature.
+
+Syntax:
+```
+public void calculateAverageMarks() throws Exception {
+	//throw checked exception 
+}
+```
+A method can declare that it throws more than one exception, in which case the exceptions are declared in a list separated by commas.
+```
+public void calculateAverageMarks() throws 
+ArithmeticException,ArrayIndexOutOfBoundsException,NullPointerException {
+	//throw checked exception 
+}
+```
+
+### throws tryout
+
+```
+class NegativeMarksException extends Exception {
+	public NegativeMarksException(String message) {
+		super(message);
+	}
+}
+
+class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int[] getMarks() {
+		return marks;
+	}
+
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+
+	public void calculateAverageMarks() throws Exception {
+		int sum = 0;
+		int totalSubjects = 0;
+
+		for (int i = 0; i < marks.length; i++) {
+			if (marks[i] < 0) {
+				throw new NegativeMarksException("Marks must not be negative!");
+			}
+			++totalSubjects;
+			sum += marks[i];
+		}
+		this.averageMarks = sum / totalSubjects;
+		System.out.println("Average Marks: " + this.averageMarks);
+	}
+}
+
+class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, -65, 76 };
+		student1.setMarks(marks);
+		try {
+			student1.calculateAverageMarks();
+		} catch (ArithmeticException e) {
+			// This block will execute only if any Arithmetic exception occurs
+			// in try block
+			System.out.println("Divide by Zero exception occurred!");
+		}
+
+		catch (ArrayIndexOutOfBoundsException e) {
+			// This block will execute only if any
+			// ArrayIndexOutOfBoundsException occurs in try block
+			System.out.println("Array index out of range exception occurred!");
+		} catch (NegativeMarksException e) {
+			// This block will execute only if any NegativeMarksException occurs
+			// in try block
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			// This block will handle all the types of exceptions that occur in
+			// try block
+			System.out.println("Some error occurred!");
+		} finally {
+			// This block will be executed irrespective of whether an exception
+			// has occurred or not
+			System.out.println("Thank you for using the application!");
+		}
+	}
+}
+
+```
+
+# Exception Summary
+
+An Exception is an unwanted event that interrupts the normal flow of the program.
+
+In Java, exception is basically of two types – Checked and Unchecked Exception.
+
+Exception can be handled with try, catch and finally block.
+
+A single try block can have any number of catch blocks.
+
+A single try block must be followed by at least one catch block or finally block.
+
+A generic catch block can handle all the exceptions.
+
+If no exception occurs in try block, then the catch blocks are completely ignored.
+
+Generic catch block must be the last catch block of try-catch.
+
+Finally block is optional.
+
+A finally block gets executed irrespective of whether an exception occurs or not.
+
+A finally block must be associated with a try block, you cannot use finally without a try block.
+
+An exception in the finally block behaves exactly like any other exception.
+
+Exception can be raised explicitly also by using throw keyword.
+
+If you are propagating the exception to the method call using throw, then method must be declared with throws keyword.
+
+Programmer can define their own exception, i.e., create User-defined exception.
+
+User-defined exception must extend Exception class.
+
+ 
+ 
 
 # Linkedin List
 

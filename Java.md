@@ -3327,6 +3327,115 @@ Programmer can define their own exception, i.e., create User-defined exception.
 User-defined exception must extend Exception class.
 
  
+ # Introduction to Junit
+
+ As you have already seen, testing is an essential part while developing an application or even a small code. Testing ensures that code is functioning properly for all possible cases.
+
+Manual testing of code is an error prone process and time consuming, especially when it comes to larger applications with increased code size. Thus, performing automated testing is more reliable and saves lot of time.
+
+There are several frameworks available for automating unit tests. JUnit and TestNG are among the popular ones for Java.
+
+In this course, you will be using JUnit.
+
+JUnit is an open-source unit testing framework for Java programming language. It provides classes to write and run automated tests.
+
+Features of JUnit
+
+open source framework used for writing and running tests
+
+less complex and takes less time
+
+provides immediate feedback
+
+shows test progress
+
+Intro
+
+We need JARs for performing JUnit testing.
+
+Java Archive (JAR) is a file containing packaged class files and associated resources. JARs are usually used to distribute applications or libraries. Projects which needs the content of an external JAR need to have the JAR included in their build path.
+
+The following JARs are required for JUnit testing. 
+
+junit-4.12.jar
+
+hamcrest-core-1.3.jar
+
+# Regular Expression
+
+A regular expression (or regex in short) is a sequence of characters that forms a search pattern. It is composed of various symbols and characters and is mainly used in pattern matching for searching and editing. It helps in providing a pattern against which a string can be matched.
+
+### RE try1
+
+```
+class Tester {
+	public static void main(String args[]) {
+		String regex1 = "Welcome.*";
+		String str1 = "Welcome to India";
+
+		String regex2 = "Welcome to (India|Mysore)";
+		String str2 = "Welcome to Mysore";
+
+		String regex3 = "[^Welcome]";
+		String str3 = "1";
+
+		System.out.println(str1.matches(regex1));
+		System.out.println(str2.matches(regex2));
+		System.out.println(str3.matches(regex3));
+
+	}
+}
+```
+
+### Re try 2
+
+```
+class Tester {
+	public static void main(String args[]) {
+		String regex1 = "[\\w]+ [\\w]+ [\\d]+";
+		String str1 = "Java Training 123";
+
+		String regex2 = "[\\w]+ [\\t] [\\w]+";
+		String str2 = "Java 	 Training";
+
+		String regex3 = "[\\w]+ [^\\w]+ [\\d]+";
+		String str3 = "Java Training 123";
+
+		String regex4 = "[\\D]+ [\\W]+";
+		String str4 = "Java *";
+
+		System.out.println(str1.matches(regex1));
+		System.out.println(str2.matches(regex2));
+		System.out.println(str3.matches(regex3));
+		System.out.println(str4.matches(regex4));
+
+	}
+}
+```
+
+### Password validation
+```
+class Tester {
+	public static boolean isValidPassword(String password) {
+		boolean flag = false;
+		String regex = "[A-Za-z]{8,10}[0-9]{4}";
+
+		if (password.matches(regex)) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	public static void main(String[] args) {
+		String password = "gftdrstr8645";
+		System.out.println("The password of the customer is " + password);
+		if (isValidPassword(password))
+			System.out.println("The password is valid!");
+		else
+			System.out.println("The password is not valid!");
+	}
+}
+```
  
 
 # Linkedin List
@@ -3587,4 +3696,16 @@ class Tester {
 	}
 }
 ```
+
+Interface extend multiple interface
+
+Interface:
+Methods :
+public and abstract
+
+Field :
+public static final
+
+class can extend only one class
+class can implements multiple interface
 

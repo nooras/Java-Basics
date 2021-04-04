@@ -3697,14 +3697,17 @@ class Tester {
 }
 ```
 
-Interface extend multiple interface
+
 
 Interface:
 Methods :
 public and abstract
+Java 8 - default and static
 
 Field :
 public static final
+
+Interface extend multiple interface
 
 class can extend only one class
 class can implements multiple interface
